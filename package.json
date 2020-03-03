@@ -1,0 +1,24 @@
+{
+  "name": "transactional-pin-service",
+  "version": "1.0.0",
+  "description": "Service that exposes functionality to save and retrieve password and Personal Identification Number (PIN) for given user.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yexhoo/transactional-pin-service.git"
+  },
+  "keywords": [
+    "service",
+    "transactional",
+    "PIN"
+  ],
+  "author": "yexhoo (Josue Nolasco Miranda)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yexhoo/transactional-pin-service/issues"
+  },
+  "homepage": "https://github.com/yexhoo/transactional-pin-service#readme"
+}
