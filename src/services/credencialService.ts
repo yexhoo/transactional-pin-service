@@ -10,7 +10,7 @@ export default class CredencialService {
   }
 
   create(user: User): Promise<any> {
-    return new Promise((resolve) => {resolve(this.userValidator.create(user))})
-    .then(() =>{ return user})
+    return new Promise((resolve) => { resolve(this.userValidator.create(user)) })
+      .then(() => { return user })
   }
 }
