@@ -4,4 +4,4 @@ exports.get = `
 
 exports.save = `
     INSERT INTO credential 
-      VALUES (%s, '{%s}', '{%s}', '{%s}', '{%s}');`
+      VALUES (%s, '{%s}', '{%s}', '%s');`

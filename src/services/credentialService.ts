@@ -1,45 +1,42 @@
+import Aes from "./ciphers/aes"
 import User from "../model/user"
-import UserValidator from "./validators/userValidator";
-import CredentialRepository from "./repositories/credentialRepository"
-import BadRequest from "../errors/badRequest";
-import CipherService from "./cipherService";
 import Credential from "../model/credential"
+import KeyDerivation from "./ciphers/keyDerivation";
+import ValidatorService from "./validators/validatorService";
+import CredentialRepository from "./repositories/credentialRepository"
 
 export default class CredentialService {
 
-  public userValidator: UserValidator;
+  public validatorService: ValidatorService;
   public credentialRepository: CredentialRepository;
-  public cipherService: CipherService
+  public keyDerivation: KeyDerivation
+  public aes: Aes
 
   constructor(container: any) {
-    this.userValidator = container.userValidator;
+    this.validatorService = container.validatorService;
     this.credentialRepository = container.credentialRepository;
-    this.cipherService = container.cipherService;
+    this.keyDerivation = container.keyDerivation;
+    this.aes = container.aes
   }
 
   create(user: User): Promise<any> {
-    return new Promise((resolve) => { resolve(this.userValidator.create(user)) })
+    return new Promise((resolve) => { resolve(this.validatorService.create(user)) })
       .then(() => this.credentialRepository.get(user.id))
-      .then((rows) => { if (rows.length) { throw new BadRequest("User credentials already exists") } })
+      .then((rows) => { this.validatorService.credentials(rows) })
       .then(() => this.encryptUser(user))
       .then((credential) => this.credentialRepository.save(credential))
       .then(() => { return user })
   }
 
   encryptUser(user: User) {
-
-    const credential: Credential = new Credential()
-    credential.userId = user.id
-    return this.cipherService.encrypt(user.password)
+    return this.keyDerivation.encrypt(user.password)
       .then((result) => {
-        credential.pwd = result.data
-        credential.pwdSalt = result.salt
-        return this.cipherService.encrypt(user.pin)
-      })
-      .then((result) => {
-        credential.pin = result.data
-        credential.pinSalt = result.salt
-        return credential
+        return new Credential(
+          user.id,
+          result.data,
+          result.salt,
+          this.aes.encrypt(user.pin, user.password)
+        )
       })
   }
 }

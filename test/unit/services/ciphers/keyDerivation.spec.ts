@@ -2,21 +2,21 @@ import 'mocha'
 import { expect } from 'chai'
 import { stubObject } from "ts-sinon";
 
-import CipherService from '../../../src/services/cipherService';
-import GeneratorService from '../../../src/services/generatorService';
+import KeyDerivation from './../../../../src/services/ciphers/keyDerivation';
+import GeneratorService from '../../../../src/services/generatorService';
 
-describe('CipherService', () => {
+describe('KeyDerivation', () => {
     
     const TEST_CIPHER_VALUES = { "ITERATION_COUNT": 500, "DERIVED_KEY_LEN": 8, "HASH": "MD5" };
     process.env = Object.assign(TEST_CIPHER_VALUES, process.env);
 
-    let service: CipherService, generatorServiceStub: any
+    let service: KeyDerivation, generatorServiceStub: any
 
     beforeEach(() => {
         generatorServiceStub = stubObject<GeneratorService>(new GeneratorService());
 
         const container : any = {"generatorService": generatorServiceStub }
-        service = new CipherService(container)
+        service = new KeyDerivation(container)
     })
 
     it('encrypt data', function () {
