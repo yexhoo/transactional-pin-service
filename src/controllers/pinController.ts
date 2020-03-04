@@ -6,7 +6,7 @@ import BaseError from "../errors/baseError"
 import PinService from "../services/pinService";
 
 @route("/pin")
-export default class PinController{
+export default class PinController {
 
   public pinService: PinService;
 

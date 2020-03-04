@@ -8,6 +8,11 @@ export default class ValidatorService {
         if (!user.pin) { throw new BadRequest("PIN is required") }
     }
 
+    update(user: User) {
+        this.pin(user)
+        if (!user.newPassword) { throw new BadRequest("New password is required") }
+    }
+
     pin(user: User) {
         if (!user) { throw new BadRequest("User data is required") }
         if (user.id <= 0) { throw new BadRequest("User id is required") }

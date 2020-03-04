@@ -1,8 +1,8 @@
 import Aes from "./ciphers/aes"
 import User from "../model/user"
 import Credential from "../model/credential"
-import KeyDerivation from "./ciphers/keyDerivation";
-import ValidatorService from "./validators/validatorService";
+import KeyDerivation from "./ciphers/keyDerivation"
+import ValidatorService from "./validators/validatorService"
 import CredentialRepository from "./repositories/credentialRepository"
 
 export default class CredentialService {
@@ -23,19 +23,29 @@ export default class CredentialService {
     return new Promise((resolve) => { resolve(this.validatorService.create(user)) })
       .then(() => this.credentialRepository.get(user.id))
       .then((rows) => { this.validatorService.credentials(rows) })
-      .then(() => this.encryptUser(user))
+      .then(() => this.encryptCredentials(user))
       .then((credential) => this.credentialRepository.save(credential))
       .then(() => { return user })
   }
 
-  encryptUser(user: User) {
+  update(user: User): Promise<any> {
+    return new Promise((resolve) => { resolve(this.validatorService.update(user)) })
+      .then(() => this.credentialRepository.get(user.id))
+      .then((rows) => { this.validatorService.exist(rows); return rows[0];})
+      .then((credential) => {
+
+        user.pin = this.aes.decrypt(credential.pin, user.password)
+        user.password = user.newPassword
+        return this.encryptCredentials(user)
+      })
+      .then((credential) => this.credentialRepository.update(credential))
+      .then(() => { return user })
+  }
+
+  encryptCredentials(user: User) {
     return this.keyDerivation.encrypt(user.password)
       .then((result) => {
-        return new Credential(
-          user.id,
-          result.data,
-          result.salt,
-          this.aes.encrypt(user.pin, user.password)
+        return new Credential(user.id, result.data, result.salt, this.aes.encrypt(user.pin, user.password)
         )
       })
   }
