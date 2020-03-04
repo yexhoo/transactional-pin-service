@@ -17,4 +17,14 @@ export default class CredentialRepository {
                     , c.salt?.toString()
                     , c.pin?.toString()))
     }
+
+    public update(c: Credential) {
+        return executor
+            .run(util
+                .format(script.update
+                    , c.pwd?.toString()
+                    , c.salt?.toString()
+                    , c.pin?.toString()
+                    , c.userId))
+    }
 }
