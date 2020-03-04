@@ -26,6 +26,10 @@ describe('CipherService', () => {
 
         return service.encrypt(password)
             .then((encryptedPassword) => {
+
+                 console.log("aaaaaaaaaaaa ", encryptedPassword.toString())
+                 console.log("bbbbbbbbbbbb ", encryptedPassword)   
+
                 expect(encryptedPassword.toString()).to.equal(expectedResult.toString())
             })
             .catch(function (m) { throw new Error(m.message) })

@@ -4,7 +4,7 @@ Service that exposes functionality to save and retrieve password and Personal Id
 ## Mission: Retrieve transactional PIN
 
 <p align="justify">
-Our users are assigned a debit card after they complete their onboarding. During this process, the user chooses a PIN that will be assigned to their card before it’s delivered.However, users tend to forget this PIN, so your mission is to give them the ability to retrieve their transactional PIN at any time from their app. However, we don’t want to store it in plain text. Similarly to how only a user knows their password, no one at Fondeadora (our outside!) should be able to figure out what a user’s PIN is, regardless of their level of access.
+Our users are assigned a debit card after they complete their onboarding. During this process, the user chooses a PIN that will be assigned to their card before it’s delivered.However, users tend to forget this PIN, so your mission is to give them the ability to retrieve their transactional PIN at any time from their app. However, we don’t want to store it in plain text. Similarly to how only a user knows their password, no one should be able to figure out what a user’s PIN is, regardless of their level of access.
 
 Your task is to create a service, that covers these use cases:
 
