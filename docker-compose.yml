@@ -6,7 +6,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://user:secret@postgres:5432/challenge
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_SCHEMA}
       NODE_ENV: development
       PORT: 3000
     ports:
@@ -21,6 +21,6 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: challenge
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_SCHEMA}
