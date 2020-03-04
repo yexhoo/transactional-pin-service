@@ -14,8 +14,7 @@ export default class CredentialRepository {
                 .format(script.save
                     , c.userId
                     , c.pwd?.toString()
-                    , c.pin?.toString()
-                    , c.pwdSalt?.toString()
-                    , c.pinSalt?.toString()))
+                    , c.salt?.toString()
+                    , c.pin?.toString()))
     }
 }

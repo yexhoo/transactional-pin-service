@@ -1,7 +1,7 @@
 import pbkdf from 'js-crypto-pbkdf';
-import GeneratorService from './generatorService';
+import GeneratorService from '../generatorService';
 
-export default class CipherService {
+export default class KeyDerivation {
 
     public generatorService: GeneratorService;
 
@@ -9,9 +9,9 @@ export default class CipherService {
         this.generatorService = container.generatorService
     }
 
-    encrypt(password: string): Promise<any> {
+    encrypt(password: string, optional_salt: Uint8Array = new Uint8Array(0)): Promise<any> {
 
-        const salt: Uint8Array = this.generatorService.salt()
+        const salt: Uint8Array = optional_salt.length == 0 ? this.generatorService.salt() : optional_salt
         const iterationCount: number = Number(process.env.ITERATION_COUNT);
         const derivedKeyLen: number = Number(process.env.DERIVED_KEY_LEN);
         const hash: any = String(process.env.HASH);

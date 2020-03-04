@@ -8,9 +8,8 @@ module.exports.up = function (next) {
   CREATE TABLE IF NOT EXISTS credential (
     user_id integer PRIMARY KEY,
     pwd integer[] NOT NULL,
-    pin integer[] NOT NULL,
-    pwd_salt integer[] NOT NULL,
-    pin_salt integer[] NOT NULL
+    salt integer[] NOT NULL,
+    pin varchar (100) NOT NULL
   )`;
 
   return executor

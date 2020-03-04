@@ -1,12 +1,12 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import UserValidator from "../../../../src/services/validators/userValidator"
+import ValidatorService from "../../../../src/services/validators/validatorService"
 import User from '../../../../src/model/user';
 
 describe('UserValidator', () => {
 
-    let validator : UserValidator = new UserValidator()
+    let validator : ValidatorService = new ValidatorService()
     let user:User
 
     it('User id is required', () => {
