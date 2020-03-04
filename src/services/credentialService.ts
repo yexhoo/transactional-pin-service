@@ -1,6 +1,6 @@
 import User from "../model/user"
 import UserValidator from "./validators/userValidator";
-import UserRepository from "./repositories/userRepository"
+import CredentialRepository from "./repositories/credentialRepository"
 import BadRequest from "../errors/badRequest";
 import CipherService from "./cipherService";
 import Credential from "../model/credential"
@@ -8,21 +8,21 @@ import Credential from "../model/credential"
 export default class CredentialService {
 
   public userValidator: UserValidator;
-  public userRepository: UserRepository;
+  public credentialRepository: CredentialRepository;
   public cipherService: CipherService
 
   constructor(container: any) {
     this.userValidator = container.userValidator;
-    this.userRepository = container.userRepository;
+    this.credentialRepository = container.credentialRepository;
     this.cipherService = container.cipherService;
   }
 
   create(user: User): Promise<any> {
     return new Promise((resolve) => { resolve(this.userValidator.create(user)) })
-      .then(() => this.userRepository.get(user.id))
+      .then(() => this.credentialRepository.get(user.id))
       .then((rows) => { if (rows.length) { throw new BadRequest("User credentials already exists") } })
       .then(() => this.encryptUser(user))
-      .then((credential) => this.userRepository.save(credential))
+      .then((credential) => this.credentialRepository.save(credential))
       .then(() => { return user })
   }
 

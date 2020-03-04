@@ -105,3 +105,6 @@ dist
 
 # dotenv files excluded
 .env
+
+# migrate file excluded
+.migrate
