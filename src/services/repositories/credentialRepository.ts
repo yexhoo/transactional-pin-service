@@ -1,9 +1,9 @@
 const util = require("util")
 const executor = require("../../db/executor")
-const script = require("./scripts/user")
-import Credential from ".././../model/credential"
+const script = require("./scripts/credential")
+import Credential from "../../model/credential"
 
-export default class UserRepository {
+export default class CredentialRepository {
     public get(userId: number): Promise<any> {
         return executor.select(util.format(script.get, userId))
     }
