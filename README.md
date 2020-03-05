@@ -224,5 +224,171 @@ http://localhost:3000/migration/up
 <p align="center"><img src="resources/db-tables.png"><p align="center"></p>
 
 
+
+## **Endpoints**
+
 ***
-### Endpoints.
+**Save credentials**
+
+* **Description:** Allows to store password and pin for given user.
+* **URL:** http://localhost:3000/credentials
+
+* **Method:** `POST`
+  
+*  **Body:** `{"id": 1,"password": "text","pin": "ABCD"}`
+
+   **Required:** `id=[integer], password=[string], pin=[string]`
+   
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{"id": 1,"password": "text","pin": "ABCD"}`
+    
+* **Error Response:**
+
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User data is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User id is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "Password is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "PIN is required"}`  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User credentials already exists"}`  
+
+* **Sample Call:**
+
+  `{"id": 111,"password": "password","pin": "1234"}`
+
+***
+**Update password**
+
+
+* **Description:** Allows to update password for given user and password.
+
+* **URL:** http://localhost:3000/credentials
+
+* **Method:** `PUT`
+  
+*  **Body:** `{"id": 1,"password": "text","newPassword": "otherText"}`
+
+   **Required:** `id=[integer], password=[string], newPassword=[string]`
+   
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{"id": 111,"password": "password", newPassword:"otherText", "pin": ""}`
+    
+* **Error Response:**
+
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User data is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User id is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "Password is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "New password is required"}`  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User not exists"}`  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "Wrong password"}`    
+
+* **Sample Call:**
+
+  `{"id": 111,"password": "1234","newPassword": "5678"}`  
+
+
+***
+**Retrieve PIN**
+
+* **Description:** Allows to get PIN for given user and password.
+
+* **URL:** http://localhost:3000/pin/:userId/:password
+
+* **Method:** `GET`
+  
+*  **Url params:** `userId, password`
+
+   **Required:** `userId=[integer], password=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{"id": 111,"password": "password", newPassword:"", "pin":"ABCD"}`
+    
+* **Error Response:**
+
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User data is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User id is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "Password is required"}`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "User not exists"}`  
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"error": "Wrong password"}`    
+
+* **Sample Call:**
+
+  `http://localhost:3000/pin/1/myPassword`    
+
+***
+**Healt Check**
+
+* **Description:** Allows to validate if application is running.
+
+* **URL:** http://localhost:3000/healthCheck
+
+* **Method:** `GET`
+  
+*  **Url params:** `none`
+
+   **Required:** `none`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{
+    "application": "transactionl-pin-service"
+}`
+    
+* **Error Response:**
+
+  * **Code:** 404 Not Found <br />
+    **Content:** ``
+
+* **Sample Call:**
+
+  `http://localhost:3000/healthCheck`    
+
+***
+**Migrations**
+
+* **Description:** Allows to run migrations over Data Base.
+
+* **URL:** http://localhost:3000/migration/up
+
+* **Method:** `GET`
+  
+*  **Url params:** `none`
+
+   **Required:** `none`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{"lastRun":"1583292739344-v1.js","migrations":[{"title":"1583292739344-v1.js","timestamp":1583351368332}]}`
+    
+* **Error Response:**
+
+  * **Code:** 500 Internal Server Error <br />
+    **Content:** ``
+
+* **Sample Call:**
+
+  `http://localhost:3000/migration/up`    
